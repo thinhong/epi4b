@@ -1,0 +1,32 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Epidemiological data analysis for babies",
+    "section": "",
+    "text": "Preface\nA model is a simplified representation of a complex phenomenon (Vynnycky & White, 2010), focusing on key factors and making simplifying assumptions. These assumptions must be valid for the model to be accurate.\nHow do we know if an assumption holds true? Assumptions act as our hypotheses, which we can test by analysing the data. This book guides you through the methods and visualisations to validate assumptions in epidemiological models.\n\n\n\n\nVynnycky, E., & White, R. (2010). An Introduction to Infectious Disease Modelling. OUP Oxford.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "age.html",
+    "href": "age.html",
+    "title": "1  Age distribution",
+    "section": "",
+    "text": "1.1 Time series stacked bar\nWe want to see if the age distribution changes during the epidemic. The age categories are in age_cat, and we will look at how they change weekly. First, we will group the onset days into weeks using floor_date() from the lubridate package.\ndf$week_onset &lt;- floor_date(df$date_onset, \"week\")\nCompute the weekly percentage for each group.\ndf_plot &lt;- df |&gt; \n  filter(!is.na(week_onset), !is.na(age_cat)) |&gt; \n  count(week_onset, age_cat) |&gt; \n  group_by(week_onset) |&gt; \n  mutate(prop = n / sum(n)) |&gt; \n  data.frame()\n\n# Use complete() to fill missing groups with 0\ndf_plot &lt;- df_plot |&gt; \n  complete(week_onset, age_cat, fill = list(n = 0, prop = 0))\nPlot it with geom_bar().\nggplot(df_plot, aes(x = week_onset, y = prop, fill = age_cat)) +\n  geom_bar(stat = \"identity\") +\n  scale_fill_jco() +\n  theme_minimal()\nYou might want to reverse the order so that ages 0-4 are at the bottom and 70+ at the top. Do this by setting the position argument. Also, reverse the legend to match the new plot order.\nggplot(df_plot, aes(x = week_onset, y = prop, fill = age_cat)) +\n  geom_bar(stat = \"identity\", position = position_stack(reverse = TRUE)) +\n  guides(fill = guide_legend(reverse = TRUE)) +\n  scale_fill_jco() +\n  theme_minimal()",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Age distribution</span>"
+    ]
+  },
+  {
+    "objectID": "references.html",
+    "href": "references.html",
+    "title": "References",
+    "section": "",
+    "text": "Vynnycky, E., & White, R. (2010). An Introduction to Infectious\nDisease Modelling. OUP Oxford.",
+    "crumbs": [
+      "References"
+    ]
+  }
+]

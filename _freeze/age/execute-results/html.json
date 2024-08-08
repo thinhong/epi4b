@@ -1,0 +1,21 @@
+{
+  "hash": "1aca891c559ccb44a88a74097ef40743",
+  "result": {
+    "engine": "knitr",
+    "markdown": "# Age distribution\n\n::: {.callout-note appearance=\"simple\"}\nClick here to download the practice data:\n\n\n{{< downloadthis data/linelist_cleaned.rds dname=\"linelist_cleaned\" label=\"linelist_cleaned.rds\" type=light >}}\n\n\n:::\n\nLoad all essential packages and data.\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(dplyr)\nlibrary(tidyr)\nlibrary(ggplot2)\nlibrary(lubridate)\nlibrary(ggsci)\n\ndf <- readRDS(\"data/linelist_cleaned.rds\")\n```\n:::\n\n\n## Time series stacked bar\n\nWe want to see if the age distribution changes during the epidemic. The age categories are in `age_cat`, and we will look at how they change weekly. First, we will group the onset days into weeks using `floor_date()` from the `lubridate` package.\n\n\n::: {.cell}\n\n```{.r .cell-code}\ndf$week_onset <- floor_date(df$date_onset, \"week\")\n```\n:::\n\n\nCompute the weekly percentage for each group. \n\n\n::: {.cell}\n\n```{.r .cell-code}\ndf_plot <- df |> \n  filter(!is.na(week_onset), !is.na(age_cat)) |> \n  count(week_onset, age_cat) |> \n  group_by(week_onset) |> \n  mutate(prop = n / sum(n)) |> \n  data.frame()\n\n# Use complete() to fill missing groups with 0\ndf_plot <- df_plot |> \n  complete(week_onset, age_cat, fill = list(n = 0, prop = 0))\n```\n:::\n\n\nPlot it with `geom_bar()`.\n\n\n::: {.cell}\n\n```{.r .cell-code}\nggplot(df_plot, aes(x = week_onset, y = prop, fill = age_cat)) +\n  geom_bar(stat = \"identity\") +\n  scale_fill_jco() +\n  theme_minimal()\n```\n\n::: {.cell-output-display}\n![](age_files/figure-html/unnamed-chunk-4-1.svg){width=100%}\n:::\n:::\n\n\nYou might want to reverse the order so that ages 0-4 are at the bottom and 70+ at the top. Do this by setting the `position` argument. Also, reverse the legend to match the new plot order.\n\n\n::: {.cell}\n\n```{.r .cell-code}\nggplot(df_plot, aes(x = week_onset, y = prop, fill = age_cat)) +\n  geom_bar(stat = \"identity\", position = position_stack(reverse = TRUE)) +\n  guides(fill = guide_legend(reverse = TRUE)) +\n  scale_fill_jco() +\n  theme_minimal()\n```\n\n::: {.cell-output-display}\n![](age_files/figure-html/unnamed-chunk-5-1.svg){width=100%}\n:::\n:::\n",
+    "supporting": [
+      "age_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {
+      "include-in-header": [
+        "<link href=\"site_libs/pagedtable-1.1/css/pagedtable.css\" rel=\"stylesheet\" />\n<script src=\"site_libs/pagedtable-1.1/js/pagedtable.js\"></script>\n"
+      ]
+    },
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
