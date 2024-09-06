@@ -1,0 +1,7 @@
+# Measles
+
+## Monthly global measles data
+
+WHO provides a [Provisional measles and rubella data](https://immunizationdata.who.int/global?topic=Provisional-measles-and-rubella-data&location=) section where you can download the monthly number of measles cases reported worldwide.
+
+![](img/measles.png)

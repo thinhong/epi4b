@@ -20,6 +20,36 @@
     ]
   },
   {
+    "objectID": "viz.html",
+    "href": "viz.html",
+    "title": "2  Advanced visualisation",
+    "section": "",
+    "text": "2.1 Font family\ninstall.packages(\"systemfonts\")\nUse systemfonts::system_fonts() to manage the fonts installed on your computer.\nsystemfonts::system_fonts() |&gt; View()\nIf it’s a google font: Navigate to Google Fonts &gt; Search &gt; Download &gt; Unzip the file &gt; Select all the .ttf files &gt; Right click and select Install. R tends to play nicer with .ttf fonts than other types of fonts.\nAfter installing, go to Session &gt; Restart R &gt; Use systemfonts::system_fonts() |&gt; View() to search the font. If it’s there, you are safe to use.\nSet the graphics device to AGG. Tools &gt; Global options &gt; General &gt; Graphics &gt; Backend: AGG.\nSet the graphics device at the start of your Quarto file.\nknitr::opts_chunk$set(echo = TRUE, dev = \"ragg_png\", dpi = 400)\nLet’s try an example.\nCode\np1 &lt;- trees |&gt;\n  ggplot(aes(\n    x = Girth,\n    y = Height,\n    size = Volume,\n    colour = Volume\n  )) +\n  geom_point() +\n  labs(title = \"Nunito Sans\") +\n  theme_minimal() +\n  theme(text = element_text(family = \"Nunito Sans\"), legend.position = \"none\")\np2 &lt;- trees |&gt;\n  ggplot(aes(\n    x = Girth,\n    y = Height,\n    size = Volume,\n    colour = Volume\n  )) +\n  geom_point() +\n  labs(title = \"Karla\") +\n  theme_minimal() +\n  theme(text = element_text(family = \"Karla\"), legend.position = \"none\")\np1 | p2",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Advanced visualisation</span>"
+    ]
+  },
+  {
+    "objectID": "viz.html#font-family",
+    "href": "viz.html#font-family",
+    "title": "2  Advanced visualisation",
+    "section": "",
+    "text": "Note\n\n\n\nSource: Cara Thompson. Getting Fonts to Work in R. January 12, 2024.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Advanced visualisation</span>"
+    ]
+  },
+  {
+    "objectID": "measles.html",
+    "href": "measles.html",
+    "title": "3  Measles",
+    "section": "",
+    "text": "3.1 Monthly global measles data\nWHO provides a Provisional measles and rubella data section where you can download the monthly number of measles cases reported worldwide.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Measles</span>"
+    ]
+  },
+  {
     "objectID": "references.html",
     "href": "references.html",
     "title": "References",

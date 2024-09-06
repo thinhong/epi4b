@@ -16,6 +16,8 @@ book:
   chapters:
     - index.qmd
     - age.qmd
+    - viz.qmd
+    - measles.qmd
     - references.qmd
 
 bibliography: references.bib

@@ -1,5 +1,0 @@
-# Preface {.unnumbered}
-
-A model is a simplified representation of a complex phenomenon [@vynnycky2010], focusing on key factors and making simplifying assumptions. These assumptions must be valid for the model to be accurate.
-
-How do we know if an assumption holds true? Assumptions act as our hypotheses, which we can test by analysing the data. This book guides you through the methods and visualisations to validate assumptions in epidemiological models.

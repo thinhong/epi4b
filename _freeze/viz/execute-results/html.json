@@ -1,0 +1,21 @@
+{
+  "hash": "8f1d740640766a084af8200318ec7e31",
+  "result": {
+    "engine": "knitr",
+    "markdown": "# Advanced visualisation\n\n\n::: {.cell}\n\n:::\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(dplyr)\nlibrary(ggplot2)\nlibrary(patchwork)\n```\n:::\n\n\n## Font family\n\n::: {.callout-note}\nSource: Cara Thompson. [Getting Fonts to Work in R](https://www.cararthompson.com/posts/2024-01-12-using-fonts-in-R-for-dataviz/2024-01-12_getting-fonts-to-work.html). January 12, 2024.\n:::\n\n\n::: {.cell}\n\n```{.r .cell-code}\ninstall.packages(\"systemfonts\")\n```\n:::\n\n\nUse `systemfonts::system_fonts()` to manage the fonts installed on your computer.\n\n\n::: {.cell}\n\n```{.r .cell-code}\nsystemfonts::system_fonts() |> View()\n```\n:::\n\n\nIf it's a google font: Navigate to [Google Fonts](https://fonts.google.com/) > Search > Download > Unzip the file > Select all the `.ttf` files > Right click and select `Install`. R tends to play nicer with `.ttf` fonts than other types of fonts.\n\nAfter installing, go to Session > Restart R > Use `systemfonts::system_fonts() |> View()` to search the font. If it's there, you are safe to use.\n\n![](img/systemfonts.png)\n\nSet the graphics device to AGG. Tools > Global options > General > Graphics > Backend: AGG.\n\n![](img/agg.png)\n\nSet the graphics device at the start of your Quarto file.\n\n\n::: {.cell}\n\n```{.r .cell-code}\nknitr::opts_chunk$set(echo = TRUE, dev = \"ragg_png\", dpi = 400)\n```\n:::\n\n\nLet's try an example.\n\n\n::: {.cell}\n\n```{.r .cell-code  code-fold=\"true\"}\np1 <- trees |>\n  ggplot(aes(\n    x = Girth,\n    y = Height,\n    size = Volume,\n    colour = Volume\n  )) +\n  geom_point() +\n  labs(title = \"Nunito Sans\") +\n  theme_minimal() +\n  theme(text = element_text(family = \"Nunito Sans\"), legend.position = \"none\")\np2 <- trees |>\n  ggplot(aes(\n    x = Girth,\n    y = Height,\n    size = Volume,\n    colour = Volume\n  )) +\n  geom_point() +\n  labs(title = \"Karla\") +\n  theme_minimal() +\n  theme(text = element_text(family = \"Karla\"), legend.position = \"none\")\np1 | p2\n```\n\n::: {.cell-output-display}\n![](viz_files/figure-html/unnamed-chunk-6-1.png){width=100%}\n:::\n:::\n",
+    "supporting": [
+      "viz_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {
+      "include-in-header": [
+        "<link href=\"site_libs/pagedtable-1.1/css/pagedtable.css\" rel=\"stylesheet\" />\n<script src=\"site_libs/pagedtable-1.1/js/pagedtable.js\"></script>\n"
+      ]
+    },
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

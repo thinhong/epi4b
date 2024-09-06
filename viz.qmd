@@ -1,0 +1,77 @@
+# Advanced visualisation
+
+```{r, echo=FALSE}
+knitr::opts_chunk$set(echo = TRUE, dev = "ragg_png", dpi = 400)
+```
+
+```{r, warning=FALSE, message=FALSE}
+library(dplyr)
+library(ggplot2)
+library(patchwork)
+```
+
+## Font family
+
+::: {.callout-note}
+Source: Cara Thompson. [Getting Fonts to Work in R](https://www.cararthompson.com/posts/2024-01-12-using-fonts-in-R-for-dataviz/2024-01-12_getting-fonts-to-work.html). January 12, 2024.
+:::
+
+```{r, eval=FALSE}
+install.packages("systemfonts")
+```
+
+Use `systemfonts::system_fonts()` to manage the fonts installed on your computer.
+
+```{r, eval=FALSE}
+systemfonts::system_fonts() |> View()
+```
+
+If it's a google font: Navigate to [Google Fonts](https://fonts.google.com/) > Search > Download > Unzip the file > Select all the `.ttf` files > Right click and select `Install`. R tends to play nicer with `.ttf` fonts than other types of fonts.
+
+After installing, go to Session > Restart R > Use `systemfonts::system_fonts() |> View()` to search the font. If it's there, you are safe to use.
+
+![](img/systemfonts.png)
+
+Set the graphics device to AGG. Tools > Global options > General > Graphics > Backend: AGG.
+
+![](img/agg.png)
+
+Set the graphics device at the start of your Quarto file.
+
+```{r, eval=FALSE}
+knitr::opts_chunk$set(echo = TRUE, dev = "ragg_png", dpi = 400)
+```
+
+Let's try an example.
+
+```{r}
+#| code-fold: true
+#| fig-width: 6
+#| fig-height: 3
+#| out-width: "100%"
+
+p1 <- trees |>
+  ggplot(aes(
+    x = Girth,
+    y = Height,
+    size = Volume,
+    colour = Volume
+  )) +
+  geom_point() +
+  labs(title = "Nunito Sans") +
+  theme_minimal() +
+  theme(text = element_text(family = "Nunito Sans"), legend.position = "none")
+p2 <- trees |>
+  ggplot(aes(
+    x = Girth,
+    y = Height,
+    size = Volume,
+    colour = Volume
+  )) +
+  geom_point() +
+  labs(title = "Karla") +
+  theme_minimal() +
+  theme(text = element_text(family = "Karla"), legend.position = "none")
+p1 | p2
+```
+
