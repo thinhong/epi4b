@@ -1,0 +1,45 @@
+# Seroprevalence
+
+## Imperfect test
+
+Recall how to compute sensitivity and specificity:
+
+|   | Disease | Control |
+|------------------------|------------------------|------------------------|
+| Positive | **True positive (TP)** | False positive (FP) |
+| Negative | False negative (FN) | **True negative (TN)** |
+|  | $$\text{Sensitivity} = \frac{\text{TP}}{\text{Disease}}$$ | $$\text{Specificity} = \frac{\text{TN}}{\text{Control}}$$ |
+
+: {tbl-colwidths="\[20,40,40\]" .hover}
+
+### Rogan-Gladen correction
+
+Let:
+
+- $\pi_{est}$: the prevalence estimated from data with confidence interval $(a, b)$.
+- $\pi_{true}$: the true prevalence with confidence interval $(c, d)$.
+- Sensitivity ($SE$) and specificity ($SP$) are known.
+
+$$\begin{align} 
+\pi_{est} &= \frac{\text{positive}}{\text{total}} = \frac{TP + FP}{\text{total}} = \frac{TP}{\text{total}} + \frac{FP}{\text{total}} \\ 
+&= \frac{\text{disease}}{\text{total}} \times \frac{TP}{\text{disease}} + \frac{\text{control}}{\text{total}} \times \frac{FP}{\text{control}} \\
+&= \frac{\text{disease}}{\text{total}} \times \frac{TP}{\text{disease}} + \frac{\text{control}}{\text{total}} \times (1 - \frac{TN}{\text{control}}) \\
+&= \pi_{true} \times SE + (1 - \pi_{true}) \times (1 - SP) \\
+&= \pi_{true} \times SE + 1 - SP - \pi_{true} \times (1 - SP) \\
+&= \pi_{true} \times (SE + SP - 1) + 1 - SP
+\end{align}$$
+
+Rogan and Gladen derive $\pi_{true}$ as [@rogan1978]:
+
+$$\pi_{true} = \frac{\pi_{est} + SP - 1}{SE + SP - 1}$$
+
+Confidence interval can be estimated by many methods:
+
+1. [@diggle2011] suggested a simple transformation:
+
+$$\begin{align} 
+c &= \text{max}(0, \frac{a + SP - 1}{SE + SP - 1}) \\
+d &= \text{min}(1, \frac{b + SP - 1}{SE + SP - 1})
+\end{align}$$
+
+### Bayesian correction

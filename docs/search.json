@@ -14,39 +14,69 @@
     "href": "age.html",
     "title": "1  Age distribution",
     "section": "",
-    "text": "1.1 Time series stacked bar\nWe want to see if the age distribution changes during the epidemic. The age categories are in age_cat, and we will look at how they change weekly. First, we will group the onset days into weeks using floor_date() from the lubridate package.\ndf$week_onset &lt;- floor_date(df$date_onset, \"week\")\nCompute the weekly percentage for each group.\ndf_plot &lt;- df |&gt; \n  filter(!is.na(week_onset), !is.na(age_cat)) |&gt; \n  count(week_onset, age_cat) |&gt; \n  group_by(week_onset) |&gt; \n  mutate(prop = n / sum(n)) |&gt; \n  data.frame()\n\n# Use complete() to fill missing groups with 0\ndf_plot &lt;- df_plot |&gt; \n  complete(week_onset, age_cat, fill = list(n = 0, prop = 0))\nPlot it with geom_bar().\nggplot(df_plot, aes(x = week_onset, y = prop, fill = age_cat)) +\n  geom_bar(stat = \"identity\") +\n  scale_fill_jco() +\n  theme_minimal()\nYou might want to reverse the order so that ages 0-4 are at the bottom and 70+ at the top. Do this by setting the position argument. Also, reverse the legend to match the new plot order.\nggplot(df_plot, aes(x = week_onset, y = prop, fill = age_cat)) +\n  geom_bar(stat = \"identity\", position = position_stack(reverse = TRUE)) +\n  guides(fill = guide_legend(reverse = TRUE)) +\n  scale_fill_jco() +\n  theme_minimal()",
+    "text": "1.1 Semi-log plot\nA semi-log plot has a linear scale on the x-axis and a logarithmic scale on the y-axis.\n# Set the age groups\nage_cut &lt;- c(0, 20, 40, 60, Inf)\n\ndf_plot &lt;- df |&gt; \n  filter(!is.na(age)) |&gt; \n  #  the age groups\n  mutate(age_group = cut(age, breaks = age_cut, right = F)) |&gt; \n  # Count the daily number of infections in each age group\n  group_by(date_onset) |&gt; \n  count(age_group) |&gt; \n  # Ensure that we have all age groups per day\n  as.data.frame() |&gt; \n  complete(date_onset, age_group, fill = list(n = 0)) |&gt; \n  # Now compute the cumulative case for each age group\n  # First, take each group table\n  group_by(age_group) |&gt; \n  # Sort by ascending date\n  arrange(date_onset) |&gt;\n  # Cumulative case count\n  mutate(cum_n = cumsum(n))\nggplot(df_plot, aes(x = date_onset, y = log(cum_n, 10), color = age_group)) +\n  geom_line() +\n  scale_color_lancet() +\n  scale_y_continuous(expand = c(0, 0)) +\n  labs(x = \"Date of onset\", y = \"Log cumulative case count\", color = \"Age group\") +\n  theme_classic()",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Age distribution</span>"
     ]
   },
   {
+    "objectID": "age.html#time-series-stacked-bar",
+    "href": "age.html#time-series-stacked-bar",
+    "title": "1  Age distribution",
+    "section": "1.2 Time series stacked bar",
+    "text": "1.2 Time series stacked bar\nWe want to see if the age distribution changes during the epidemic. The age categories are in age_cat, and we will look at how they change weekly. First, we will group the onset days into weeks using floor_date() from the lubridate package.\n\ndf$week_onset &lt;- floor_date(df$date_onset, \"week\")\n\nCompute the weekly percentage for each group.\n\ndf_plot &lt;- df |&gt; \n  filter(!is.na(week_onset), !is.na(age_cat)) |&gt; \n  count(week_onset, age_cat) |&gt; \n  group_by(week_onset) |&gt; \n  mutate(prop = n / sum(n)) |&gt; \n  data.frame()\n\n# Use complete() to fill missing groups with 0\ndf_plot &lt;- df_plot |&gt; \n  complete(week_onset, age_cat, fill = list(n = 0, prop = 0))\n\nPlot it with geom_bar().\n\nggplot(df_plot, aes(x = week_onset, y = prop, fill = age_cat)) +\n  geom_bar(stat = \"identity\") +\n  scale_fill_jco() +\n  theme_minimal()\n\n\n\n\n\n\n\n\nYou might want to reverse the order so that ages 0-4 are at the bottom and 70+ at the top. Do this by setting the position argument. Also, reverse the legend to match the new plot order.\n\nggplot(df_plot, aes(x = week_onset, y = prop, fill = age_cat)) +\n  geom_bar(stat = \"identity\", position = position_stack(reverse = TRUE)) +\n  guides(fill = guide_legend(reverse = TRUE)) +\n  scale_fill_jco() +\n  theme_minimal()",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Age distribution</span>"
+    ]
+  },
+  {
+    "objectID": "sero.html",
+    "href": "sero.html",
+    "title": "2  Seroprevalence",
+    "section": "",
+    "text": "2.1 Imperfect test\nRecall how to compute sensitivity and specificity:",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Seroprevalence</span>"
+    ]
+  },
+  {
+    "objectID": "sero.html#imperfect-test",
+    "href": "sero.html#imperfect-test",
+    "title": "2  Seroprevalence",
+    "section": "",
+    "text": "Disease\nControl\n\n\n\n\nPositive\nTrue positive (TP)\nFalse positive (FP)\n\n\nNegative\nFalse negative (FN)\nTrue negative (TN)\n\n\n\n\\[\\text{Sensitivity} = \\frac{\\text{TP}}{\\text{Disease}}\\]\n\\[\\text{Specificity} = \\frac{\\text{TN}}{\\text{Control}}\\]\n\n\n\n\n2.1.1 Rogan-Gladen correction\nLet:\n\n\\(\\pi_{est}\\): the prevalence estimated from data with confidence interval \\((a, b)\\).\n\\(\\pi_{true}\\): the true prevalence with confidence interval \\((c, d)\\).\nSensitivity (\\(SE\\)) and specificity (\\(SP\\)) are known.\n\n\\[\\begin{align}\n\\pi_{est} &= \\frac{\\text{positive}}{\\text{total}} = \\frac{TP + FP}{\\text{total}} = \\frac{TP}{\\text{total}} + \\frac{FP}{\\text{total}} \\\\\n&= \\frac{\\text{disease}}{\\text{total}} \\times \\frac{TP}{\\text{disease}} + \\frac{\\text{control}}{\\text{total}} \\times \\frac{FP}{\\text{control}} \\\\\n&= \\frac{\\text{disease}}{\\text{total}} \\times \\frac{TP}{\\text{disease}} + \\frac{\\text{control}}{\\text{total}} \\times (1 - \\frac{TN}{\\text{control}}) \\\\\n&= \\pi_{true} \\times SE + (1 - \\pi_{true}) \\times (1 - SP) \\\\\n&= \\pi_{true} \\times SE + 1 - SP - \\pi_{true} \\times (1 - SP) \\\\\n&= \\pi_{true} \\times (SE + SP - 1) + 1 - SP\n\\end{align}\\]\nRogan and Gladen derive \\(\\pi_{true}\\) as (Rogan & Gladen, 1978):\n\\[\\pi_{true} = \\frac{\\pi_{est} + SP - 1}{SE + SP - 1}\\]\nConfidence interval can be estimated by many methods:\n\n(Diggle, 2011) suggested a simple transformation:\n\n\\[\\begin{align}\nc &= \\text{max}(0, \\frac{a + SP - 1}{SE + SP - 1}) \\\\\nd &= \\text{min}(1, \\frac{b + SP - 1}{SE + SP - 1})\n\\end{align}\\]\n\n\n2.1.2 Bayesian correction\n\n\n\n\nDiggle, P. J. (2011). Estimating Prevalence Using an Imperfect Test. Epidemiology Research International, 2011(1), 608719. https://doi.org/10.1155/2011/608719\n\n\nRogan, W. J., & Gladen, B. (1978). Estimating prevalence from the results of a screening test. American Journal of Epidemiology, 107(1), 71–76. https://doi.org/10.1093/oxfordjournals.aje.a112510",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Seroprevalence</span>"
+    ]
+  },
+  {
     "objectID": "viz.html",
     "href": "viz.html",
-    "title": "2  Advanced visualisation",
+    "title": "3  Advanced visualisation",
     "section": "",
-    "text": "2.1 Font family\ninstall.packages(\"systemfonts\")\nUse systemfonts::system_fonts() to manage the fonts installed on your computer.\nsystemfonts::system_fonts() |&gt; View()\nIf it’s a google font: Navigate to Google Fonts &gt; Search &gt; Download &gt; Unzip the file &gt; Select all the .ttf files &gt; Right click and select Install. R tends to play nicer with .ttf fonts than other types of fonts.\nAfter installing, go to Session &gt; Restart R &gt; Use systemfonts::system_fonts() |&gt; View() to search the font. If it’s there, you are safe to use.\nSet the graphics device to AGG. Tools &gt; Global options &gt; General &gt; Graphics &gt; Backend: AGG.\nSet the graphics device at the start of your Quarto file.\nknitr::opts_chunk$set(echo = TRUE, dev = \"ragg_png\", dpi = 400)\nLet’s try an example.\nCode\np1 &lt;- trees |&gt;\n  ggplot(aes(\n    x = Girth,\n    y = Height,\n    size = Volume,\n    colour = Volume\n  )) +\n  geom_point() +\n  labs(title = \"Nunito Sans\") +\n  theme_minimal() +\n  theme(text = element_text(family = \"Nunito Sans\"), legend.position = \"none\")\np2 &lt;- trees |&gt;\n  ggplot(aes(\n    x = Girth,\n    y = Height,\n    size = Volume,\n    colour = Volume\n  )) +\n  geom_point() +\n  labs(title = \"Karla\") +\n  theme_minimal() +\n  theme(text = element_text(family = \"Karla\"), legend.position = \"none\")\np1 | p2",
+    "text": "3.1 Font family\ninstall.packages(\"systemfonts\")\nUse systemfonts::system_fonts() to manage the fonts installed on your computer.\nsystemfonts::system_fonts() |&gt; View()\nIf it’s a google font: Navigate to Google Fonts &gt; Search &gt; Download &gt; Unzip the file &gt; Select all the .ttf files &gt; Right click and select Install. R tends to play nicer with .ttf fonts than other types of fonts.\nAfter installing, go to Session &gt; Restart R &gt; Use systemfonts::system_fonts() |&gt; View() to search the font. If it’s there, you are safe to use.\nSet the graphics device to AGG. Tools &gt; Global options &gt; General &gt; Graphics &gt; Backend: AGG.\nSet the graphics device at the start of your Quarto file.\nknitr::opts_chunk$set(echo = TRUE, dev = \"ragg_png\", dpi = 400)\nLet’s try an example.\nCode\np1 &lt;- trees |&gt;\n  ggplot(aes(\n    x = Girth,\n    y = Height,\n    size = Volume,\n    colour = Volume\n  )) +\n  geom_point() +\n  labs(title = \"Nunito Sans\") +\n  theme_minimal() +\n  theme(text = element_text(family = \"Nunito Sans\"), legend.position = \"none\")\np2 &lt;- trees |&gt;\n  ggplot(aes(\n    x = Girth,\n    y = Height,\n    size = Volume,\n    colour = Volume\n  )) +\n  geom_point() +\n  labs(title = \"Karla\") +\n  theme_minimal() +\n  theme(text = element_text(family = \"Karla\"), legend.position = \"none\")\np1 | p2",
     "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Advanced visualisation</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Advanced visualisation</span>"
     ]
   },
   {
     "objectID": "viz.html#font-family",
     "href": "viz.html#font-family",
-    "title": "2  Advanced visualisation",
+    "title": "3  Advanced visualisation",
     "section": "",
     "text": "Note\n\n\n\nSource: Cara Thompson. Getting Fonts to Work in R. January 12, 2024.",
     "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Advanced visualisation</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Advanced visualisation</span>"
     ]
   },
   {
     "objectID": "measles.html",
     "href": "measles.html",
-    "title": "3  Measles",
+    "title": "4  Measles",
     "section": "",
-    "text": "3.1 Monthly global measles data\nWHO provides a Provisional measles and rubella data section where you can download the monthly number of measles cases reported worldwide.",
+    "text": "4.1 Monthly global measles data\nWHO provides a Provisional measles and rubella data section where you can download the monthly number of measles cases reported worldwide.",
     "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Measles</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Measles</span>"
     ]
   },
   {
@@ -54,7 +84,7 @@
     "href": "references.html",
     "title": "References",
     "section": "",
-    "text": "Vynnycky, E., & White, R. (2010). An Introduction to Infectious\nDisease Modelling. OUP Oxford.",
+    "text": "Diggle, P. J. (2011). Estimating Prevalence Using an Imperfect Test.\nEpidemiology Research International, 2011(1), 608719.\nhttps://doi.org/10.1155/2011/608719\n\n\nRogan, W. J., & Gladen, B. (1978). Estimating prevalence from the\nresults of a screening test. American Journal of Epidemiology,\n107(1), 71–76. https://doi.org/10.1093/oxfordjournals.aje.a112510\n\n\nVynnycky, E., & White, R. (2010). An Introduction to Infectious\nDisease Modelling. OUP Oxford.",
     "crumbs": [
       "References"
     ]

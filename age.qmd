@@ -18,6 +18,50 @@ library(ggsci)
 df <- readRDS("data/linelist_cleaned.rds")
 ```
 
+A common question 
+
+## Semi-log plot
+
+A semi-log plot has a linear scale on the x-axis and a logarithmic scale on the y-axis.
+
+```{r}
+# Set the age groups
+age_cut <- c(0, 20, 40, 60, Inf)
+
+df_plot <- df |> 
+  filter(!is.na(age)) |> 
+  #  the age groups
+  mutate(age_group = cut(age, breaks = age_cut, right = F)) |> 
+  # Count the daily number of infections in each age group
+  group_by(date_onset) |> 
+  count(age_group) |> 
+  # Ensure that we have all age groups per day
+  as.data.frame() |> 
+  complete(date_onset, age_group, fill = list(n = 0)) |> 
+  # Now compute the cumulative case for each age group
+  # First, take each group table
+  group_by(age_group) |> 
+  # Sort by ascending date
+  arrange(date_onset) |>
+  # Cumulative case count
+  mutate(cum_n = cumsum(n))
+```
+
+```{r}
+#| warning: false
+#| fig-width: 4
+#| fig-height: 2.5
+
+ggplot(df_plot, aes(x = date_onset, y = log(cum_n, 10), color = age_group)) +
+  geom_line() +
+  scale_color_lancet() +
+  scale_y_continuous(expand = c(0, 0)) +
+  labs(x = "Date of onset", y = "Log cumulative case count", color = "Age group") +
+  theme_classic()
+```
+
+
+
 ## Time series stacked bar
 
 We want to see if the age distribution changes during the epidemic. The age categories are in `age_cat`, and we will look at how they change weekly. First, we will group the onset days into weeks using `floor_date()` from the `lubridate` package.
