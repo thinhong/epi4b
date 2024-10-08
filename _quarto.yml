@@ -1,9 +1,6 @@
 project:
   type: book
   output-dir: docs
-  
-execute:
-  freeze: auto
 
 book:
   favicon: logo-icon.svg
@@ -17,6 +14,7 @@ book:
     - index.qmd
     - age.qmd
     - sero.qmd
+    - rel-msr.qmd
     - viz.qmd
     - measles.qmd
     - references.qmd
