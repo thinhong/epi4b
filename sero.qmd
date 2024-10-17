@@ -4,11 +4,11 @@
 
 Recall how to compute sensitivity and specificity:
 
-|   | Disease | Control |
+|   | Disease (D) | Control (C) |
 |------------------------|------------------------|------------------------|
-| Positive | **True positive (TP)** | False positive (FP) |
-| Negative | False negative (FN) | **True negative (TN)** |
-|  | $$\text{Sensitivity} = \frac{\text{TP}}{\text{Disease}}$$ | $$\text{Specificity} = \frac{\text{TN}}{\text{Control}}$$ |
+| Positive (P) | **True positive (TP)** | False positive (FP) |
+| Negative (N) | False negative (FN) | **True negative (TN)** |
+|  | $$\begin{align}\text{Sensitivity} &= \frac{\text{TP}}{\text{Disease}} \\ &= \mathbb{P}(P|D)\end{align}$$ | $$\begin{align} \text{Specificity} &= \frac{\text{TN}}{\text{Control}} \\ &= \mathbb{P}(N|C) \end{align}$$ |
 
 : {tbl-colwidths="\[20,40,40\]" .hover}
 
@@ -16,9 +16,9 @@ Recall how to compute sensitivity and specificity:
 
 Let:
 
-- $\pi_{est}$: the prevalence estimated from data with confidence interval $(a, b)$.
-- $\pi_{true}$: the true prevalence with confidence interval $(c, d)$.
-- Sensitivity ($SE$) and specificity ($SP$) are known.
+-   $\pi_{est}$: the prevalence estimated from data with confidence interval $(a, b)$.
+-   $\pi_{true}$: the true prevalence with confidence interval $(c, d)$.
+-   Sensitivity ($SE$) and specificity ($SP$) are known.
 
 $$\begin{align} 
 \pi_{est} &= \frac{\text{positive}}{\text{total}} = \frac{TP + FP}{\text{total}} = \frac{TP}{\text{total}} + \frac{FP}{\text{total}} \\ 
@@ -29,13 +29,23 @@ $$\begin{align}
 &= \pi_{true} \times (SE + SP - 1) + 1 - SP
 \end{align}$$
 
-Rogan and Gladen derive $\pi_{true}$ as [@rogan1978]:
+::: {.callout-note collapse="true"}
+## Bayesian derivation
+
+$$\begin{align} 
+\pi_{est} &= \mathbb{P}(P) = \mathbb{P}(P \cap D) + \mathbb{P}(P \cap C) \\
+&= \mathbb{P}(P|D) \times \mathbb{P}(D) + \mathbb{P}(P|C) \times \mathbb{P}(C) \\
+&= SE \times \pi_{true} + (1 - SP) \times (1 - \pi_{true})
+\end{align}$$
+:::
+
+[@rogan1978] derive $\pi_{true}$ as:
 
 $$\pi_{true} = \frac{\pi_{est} + SP - 1}{SE + SP - 1}$$
 
-Confidence interval can be estimated by many methods:
+Confidence interval of the true prevalence $(c, d)$ can be estimated by many methods:
 
-1. [@diggle2011] suggested a simple transformation:
+1.  [@diggle2011] suggested a simple transformation:
 
 $$\begin{align} 
 c &= \text{max}(0, \frac{a + SP - 1}{SE + SP - 1}) \\

@@ -44,39 +44,49 @@
     "href": "sero.html#imperfect-test",
     "title": "2  Seroprevalence",
     "section": "",
-    "text": "Disease\nControl\n\n\n\n\nPositive\nTrue positive (TP)\nFalse positive (FP)\n\n\nNegative\nFalse negative (FN)\nTrue negative (TN)\n\n\n\n\\[\\text{Sensitivity} = \\frac{\\text{TP}}{\\text{Disease}}\\]\n\\[\\text{Specificity} = \\frac{\\text{TN}}{\\text{Control}}\\]\n\n\n\n\n2.1.1 Rogan-Gladen correction\nLet:\n\n\\(\\pi_{est}\\): the prevalence estimated from data with confidence interval \\((a, b)\\).\n\\(\\pi_{true}\\): the true prevalence with confidence interval \\((c, d)\\).\nSensitivity (\\(SE\\)) and specificity (\\(SP\\)) are known.\n\n\\[\\begin{align}\n\\pi_{est} &= \\frac{\\text{positive}}{\\text{total}} = \\frac{TP + FP}{\\text{total}} = \\frac{TP}{\\text{total}} + \\frac{FP}{\\text{total}} \\\\\n&= \\frac{\\text{disease}}{\\text{total}} \\times \\frac{TP}{\\text{disease}} + \\frac{\\text{control}}{\\text{total}} \\times \\frac{FP}{\\text{control}} \\\\\n&= \\frac{\\text{disease}}{\\text{total}} \\times \\frac{TP}{\\text{disease}} + \\frac{\\text{control}}{\\text{total}} \\times (1 - \\frac{TN}{\\text{control}}) \\\\\n&= \\pi_{true} \\times SE + (1 - \\pi_{true}) \\times (1 - SP) \\\\\n&= \\pi_{true} \\times SE + 1 - SP - \\pi_{true} \\times (1 - SP) \\\\\n&= \\pi_{true} \\times (SE + SP - 1) + 1 - SP\n\\end{align}\\]\nRogan and Gladen derive \\(\\pi_{true}\\) as (Rogan & Gladen, 1978):\n\\[\\pi_{true} = \\frac{\\pi_{est} + SP - 1}{SE + SP - 1}\\]\nConfidence interval can be estimated by many methods:\n\n(Diggle, 2011) suggested a simple transformation:\n\n\\[\\begin{align}\nc &= \\text{max}(0, \\frac{a + SP - 1}{SE + SP - 1}) \\\\\nd &= \\text{min}(1, \\frac{b + SP - 1}{SE + SP - 1})\n\\end{align}\\]\n\n\n2.1.2 Bayesian correction\n\n\n\n\nDiggle, P. J. (2011). Estimating Prevalence Using an Imperfect Test. Epidemiology Research International, 2011(1), 608719. https://doi.org/10.1155/2011/608719\n\n\nRogan, W. J., & Gladen, B. (1978). Estimating prevalence from the results of a screening test. American Journal of Epidemiology, 107(1), 71–76. https://doi.org/10.1093/oxfordjournals.aje.a112510",
+    "text": "Disease (D)\nControl (C)\n\n\n\n\nPositive (P)\nTrue positive (TP)\nFalse positive (FP)\n\n\nNegative (N)\nFalse negative (FN)\nTrue negative (TN)\n\n\n\n\\[\\begin{align}\\text{Sensitivity} &= \\frac{\\text{TP}}{\\text{Disease}} \\\\ &= \\mathbb{P}(P|D)\\end{align}\\]\n\\[\\begin{align} \\text{Specificity} &= \\frac{\\text{TN}}{\\text{Control}} \\\\ &= \\mathbb{P}(N|C) \\end{align}\\]\n\n\n\n\n2.1.1 Rogan-Gladen correction\nLet:\n\n\\(\\pi_{est}\\): the prevalence estimated from data with confidence interval \\((a, b)\\).\n\\(\\pi_{true}\\): the true prevalence with confidence interval \\((c, d)\\).\nSensitivity (\\(SE\\)) and specificity (\\(SP\\)) are known.\n\n\\[\\begin{align}\n\\pi_{est} &= \\frac{\\text{positive}}{\\text{total}} = \\frac{TP + FP}{\\text{total}} = \\frac{TP}{\\text{total}} + \\frac{FP}{\\text{total}} \\\\\n&= \\frac{\\text{disease}}{\\text{total}} \\times \\frac{TP}{\\text{disease}} + \\frac{\\text{control}}{\\text{total}} \\times \\frac{FP}{\\text{control}} \\\\\n&= \\frac{\\text{disease}}{\\text{total}} \\times \\frac{TP}{\\text{disease}} + \\frac{\\text{control}}{\\text{total}} \\times (1 - \\frac{TN}{\\text{control}}) \\\\\n&= \\pi_{true} \\times SE + (1 - \\pi_{true}) \\times (1 - SP) \\\\\n&= \\pi_{true} \\times SE + 1 - SP - \\pi_{true} \\times (1 - SP) \\\\\n&= \\pi_{true} \\times (SE + SP - 1) + 1 - SP\n\\end{align}\\]\n\n\n\n\n\n\nBayesian derivation\n\n\n\n\n\n\\[\\begin{align}\n\\pi_{est} &= \\mathbb{P}(P) = \\mathbb{P}(P \\cap D) + \\mathbb{P}(P \\cap C) \\\\\n&= \\mathbb{P}(P|D) \\times \\mathbb{P}(D) + \\mathbb{P}(P|C) \\times \\mathbb{P}(C) \\\\\n&= SE \\times \\pi_{true} + (1 - SP) \\times (1 - \\pi_{true})\n\\end{align}\\]\n\n\n\n(Rogan & Gladen, 1978) derive \\(\\pi_{true}\\) as:\n\\[\\pi_{true} = \\frac{\\pi_{est} + SP - 1}{SE + SP - 1}\\]\nConfidence interval of the true prevalence \\((c, d)\\) can be estimated by many methods:\n\n(Diggle, 2011) suggested a simple transformation:\n\n\\[\\begin{align}\nc &= \\text{max}(0, \\frac{a + SP - 1}{SE + SP - 1}) \\\\\nd &= \\text{min}(1, \\frac{b + SP - 1}{SE + SP - 1})\n\\end{align}\\]\n\n\n2.1.2 Bayesian correction\n\n\n\n\nDiggle, P. J. (2011). Estimating Prevalence Using an Imperfect Test. Epidemiology Research International, 2011(1), 608719. https://doi.org/10.1155/2011/608719\n\n\nRogan, W. J., & Gladen, B. (1978). Estimating prevalence from the results of a screening test. American Journal of Epidemiology, 107(1), 71–76. https://doi.org/10.1093/oxfordjournals.aje.a112510",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Seroprevalence</span>"
     ]
   },
   {
+    "objectID": "rel-msr.html",
+    "href": "rel-msr.html",
+    "title": "3  Relative measures",
+    "section": "",
+    "text": "Intervention\nControl\n\n\n\n\nEvent\nA\nB\n\n\nNon-event\nC\nD\n\n\n\n\\[Risk_{int} = \\frac{A}{A + C}\\]\n\\[Risk_{ctrl} = \\frac{B}{B + D}\\]\n\n\n\n\\[Odds_{int}= \\frac{A}{C}\\]\n\\[Odds_{ctrl}= \\frac{B}{D}\\]\n\n\n\nLet see the \\(Risk\\) formula:\n\\[\\begin{align}\nRisk_{int} &= \\frac{A}{A + C} \\\\\n&= \\frac{\\frac{A}{C}}{\\frac{A + C}{C}} = \\frac{\\frac{A}{C}}{\\frac{A}{C} + 1} \\\\\n&= \\frac{Odds_{int}}{Odds_{int} + 1}\n\\end{align}\\]\nSo \\(Risk \\approx Odds\\) when \\(Odds + 1 \\approx 1\\), which is when \\(Odds \\approx 0\\). This is why people often say the odds ratio (OR) and risk ratio (RR) are interchangeable when the baseline risk is very low, meaning the outcome is rare. When the risk falls below 20%, odds and risk become more similar, and they are nearly identical when the risk is below 10% (Darzi et al., 2023).\n\n\n\n\nDarzi, A. J., Busse, J. W., Phillips, M., Wykoff, C. C., Guymer, R. H., Thabane, L., Bhandari, M., & Chaudhary, V. (2023). Interpreting results from randomized controlled trials: What measures to focus on in clinical practice. Eye, 37(15), 3055–3058. https://doi.org/10.1038/s41433-023-02454-7",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Relative measures</span>"
+    ]
+  },
+  {
     "objectID": "viz.html",
     "href": "viz.html",
-    "title": "3  Advanced visualisation",
+    "title": "4  Advanced visualisation",
     "section": "",
-    "text": "3.1 Font family\ninstall.packages(\"systemfonts\")\nUse systemfonts::system_fonts() to manage the fonts installed on your computer.\nsystemfonts::system_fonts() |&gt; View()\nIf it’s a google font: Navigate to Google Fonts &gt; Search &gt; Download &gt; Unzip the file &gt; Select all the .ttf files &gt; Right click and select Install. R tends to play nicer with .ttf fonts than other types of fonts.\nAfter installing, go to Session &gt; Restart R &gt; Use systemfonts::system_fonts() |&gt; View() to search the font. If it’s there, you are safe to use.\nSet the graphics device to AGG. Tools &gt; Global options &gt; General &gt; Graphics &gt; Backend: AGG.\nSet the graphics device at the start of your Quarto file.\nknitr::opts_chunk$set(echo = TRUE, dev = \"ragg_png\", dpi = 400)\nLet’s try an example.\nCode\np1 &lt;- trees |&gt;\n  ggplot(aes(\n    x = Girth,\n    y = Height,\n    size = Volume,\n    colour = Volume\n  )) +\n  geom_point() +\n  labs(title = \"Nunito Sans\") +\n  theme_minimal() +\n  theme(text = element_text(family = \"Nunito Sans\"), legend.position = \"none\")\np2 &lt;- trees |&gt;\n  ggplot(aes(\n    x = Girth,\n    y = Height,\n    size = Volume,\n    colour = Volume\n  )) +\n  geom_point() +\n  labs(title = \"Karla\") +\n  theme_minimal() +\n  theme(text = element_text(family = \"Karla\"), legend.position = \"none\")\np1 | p2",
+    "text": "4.1 Font family\ninstall.packages(\"systemfonts\")\nUse systemfonts::system_fonts() to manage the fonts installed on your computer.\nsystemfonts::system_fonts() |&gt; View()\nIf it’s a google font: Navigate to Google Fonts &gt; Search &gt; Download &gt; Unzip the file &gt; Select all the .ttf files &gt; Right click and select Install. R tends to play nicer with .ttf fonts than other types of fonts.\nAfter installing, go to Session &gt; Restart R &gt; Use systemfonts::system_fonts() |&gt; View() to search the font. If it’s there, you are safe to use.\nSet the graphics device to AGG. Tools &gt; Global options &gt; General &gt; Graphics &gt; Backend: AGG.\nSet the graphics device at the start of your Quarto file.\nknitr::opts_chunk$set(echo = TRUE, dev = \"ragg_png\", dpi = 400)\nLet’s try an example.\nCode\np1 &lt;- trees |&gt;\n  ggplot(aes(\n    x = Girth,\n    y = Height,\n    size = Volume,\n    colour = Volume\n  )) +\n  geom_point() +\n  labs(title = \"Nunito Sans\") +\n  theme_minimal() +\n  theme(text = element_text(family = \"Nunito Sans\"), legend.position = \"none\")\np2 &lt;- trees |&gt;\n  ggplot(aes(\n    x = Girth,\n    y = Height,\n    size = Volume,\n    colour = Volume\n  )) +\n  geom_point() +\n  labs(title = \"Karla\") +\n  theme_minimal() +\n  theme(text = element_text(family = \"Karla\"), legend.position = \"none\")\np1 | p2",
     "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Advanced visualisation</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Advanced visualisation</span>"
     ]
   },
   {
     "objectID": "viz.html#font-family",
     "href": "viz.html#font-family",
-    "title": "3  Advanced visualisation",
+    "title": "4  Advanced visualisation",
     "section": "",
     "text": "Note\n\n\n\nSource: Cara Thompson. Getting Fonts to Work in R. January 12, 2024.",
     "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Advanced visualisation</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Advanced visualisation</span>"
     ]
   },
   {
     "objectID": "measles.html",
     "href": "measles.html",
-    "title": "4  Measles",
+    "title": "5  Measles",
     "section": "",
-    "text": "4.1 Monthly global measles data\nWHO provides a Provisional measles and rubella data section where you can download the monthly number of measles cases reported worldwide.",
+    "text": "5.1 Monthly global measles data\nWHO provides a Provisional measles and rubella data section where you can download the monthly number of measles cases reported worldwide.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Measles</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Measles</span>"
     ]
   },
   {
@@ -84,7 +94,7 @@
     "href": "references.html",
     "title": "References",
     "section": "",
-    "text": "Diggle, P. J. (2011). Estimating Prevalence Using an Imperfect Test.\nEpidemiology Research International, 2011(1), 608719.\nhttps://doi.org/10.1155/2011/608719\n\n\nRogan, W. J., & Gladen, B. (1978). Estimating prevalence from the\nresults of a screening test. American Journal of Epidemiology,\n107(1), 71–76. https://doi.org/10.1093/oxfordjournals.aje.a112510\n\n\nVynnycky, E., & White, R. (2010). An Introduction to Infectious\nDisease Modelling. OUP Oxford.",
+    "text": "Darzi, A. J., Busse, J. W., Phillips, M., Wykoff, C. C., Guymer, R. H.,\nThabane, L., Bhandari, M., & Chaudhary, V. (2023). Interpreting\nresults from randomized controlled trials: What measures to focus on in\nclinical practice. Eye, 37(15), 3055–3058. https://doi.org/10.1038/s41433-023-02454-7\n\n\nDiggle, P. J. (2011). Estimating Prevalence Using an Imperfect Test.\nEpidemiology Research International, 2011(1), 608719.\nhttps://doi.org/10.1155/2011/608719\n\n\nRogan, W. J., & Gladen, B. (1978). Estimating prevalence from the\nresults of a screening test. American Journal of Epidemiology,\n107(1), 71–76. https://doi.org/10.1093/oxfordjournals.aje.a112510\n\n\nVynnycky, E., & White, R. (2010). An Introduction to Infectious\nDisease Modelling. OUP Oxford.",
     "crumbs": [
       "References"
     ]

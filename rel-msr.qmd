@@ -1,0 +1,20 @@
+# Relative measures
+
+|   | Intervention | Control |
+|------------------------|------------------------|------------------------|
+| Event | A | B |
+| Non-event | C | D |
+|  | $$Risk_{int} = \frac{A}{A + C}$$ | $$Risk_{ctrl} = \frac{B}{B + D}$$ |
+|  | $$Odds_{int}= \frac{A}{C}$$ | $$Odds_{ctrl}= \frac{B}{D}$$ |
+
+: {tbl-colwidths="\[30,35,35\]" .hover}
+
+Let see the $Risk$ formula:
+
+$$\begin{align}
+Risk_{int} &= \frac{A}{A + C} \\
+&= \frac{\frac{A}{C}}{\frac{A + C}{C}} = \frac{\frac{A}{C}}{\frac{A}{C} + 1} \\
+&= \frac{Odds_{int}}{Odds_{int} + 1}
+\end{align}$$
+
+So $Risk \approx Odds$ when $Odds + 1 \approx 1$, which is when $Odds \approx 0$. This is why people often say the odds ratio (OR) and risk ratio (RR) are interchangeable when the baseline risk is very low, meaning the outcome is rare. When the risk falls below 20%, odds and risk become more similar, and they are nearly identical when the risk is below 10% [@darzi2023].

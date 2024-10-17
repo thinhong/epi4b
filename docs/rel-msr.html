@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2&nbsp; Seroprevalence – Epidemiological data analysis for babies</title>
+<title>3&nbsp; Relative measures – Epidemiological data analysis for babies</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -50,8 +50,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./rel-msr.html" rel="next">
-<link href="./age.html" rel="prev">
+<link href="./viz.html" rel="next">
+<link href="./sero.html" rel="prev">
 <link href="./logo-icon.svg" rel="icon" type="image/svg+xml">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -131,7 +131,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sero.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Seroprevalence</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rel-msr.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Relative measures</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -170,13 +170,13 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sero.html" class="sidebar-item-text sidebar-link active">
+  <a href="./sero.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Seroprevalence</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./rel-msr.html" class="sidebar-item-text sidebar-link">
+  <a href="./rel-msr.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Relative measures</span></span></a>
   </div>
 </li>
@@ -203,25 +203,15 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="3">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#imperfect-test" id="toc-imperfect-test" class="nav-link active" data-scroll-target="#imperfect-test"><span class="header-section-number">2.1</span> Imperfect test</a>
-  <ul>
-  <li><a href="#rogan-gladen-correction" id="toc-rogan-gladen-correction" class="nav-link" data-scroll-target="#rogan-gladen-correction"><span class="header-section-number">2.1.1</span> Rogan-Gladen correction</a></li>
-  <li><a href="#bayesian-correction" id="toc-bayesian-correction" class="nav-link" data-scroll-target="#bayesian-correction"><span class="header-section-number">2.1.2</span> Bayesian correction</a></li>
-  </ul></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Seroprevalence</span></h1>
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Relative measures</span></h1>
 </div>
 
 
@@ -238,101 +228,56 @@ window.Quarto = {
 </header>
 
 
-<section id="imperfect-test" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="imperfect-test"><span class="header-section-number">2.1</span> Imperfect test</h2>
-<p>Recall how to compute sensitivity and specificity:</p>
 <table class="table-hover caption-top table">
 <colgroup>
-<col style="width: 20%">
-<col style="width: 40%">
-<col style="width: 40%">
+<col style="width: 30%">
+<col style="width: 35%">
+<col style="width: 35%">
 </colgroup>
 <thead>
 <tr class="header">
 <th></th>
-<th>Disease (D)</th>
-<th>Control (C)</th>
+<th>Intervention</th>
+<th>Control</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Positive (P)</td>
-<td><strong>True positive (TP)</strong></td>
-<td>False positive (FP)</td>
+<td>Event</td>
+<td>A</td>
+<td>B</td>
 </tr>
 <tr class="even">
-<td>Negative (N)</td>
-<td>False negative (FN)</td>
-<td><strong>True negative (TN)</strong></td>
+<td>Non-event</td>
+<td>C</td>
+<td>D</td>
 </tr>
 <tr class="odd">
 <td></td>
-<td><span class="math display">\[\begin{align}\text{Sensitivity} &amp;= \frac{\text{TP}}{\text{Disease}} \\ &amp;= \mathbb{P}(P|D)\end{align}\]</span></td>
-<td><span class="math display">\[\begin{align} \text{Specificity} &amp;= \frac{\text{TN}}{\text{Control}} \\ &amp;= \mathbb{P}(N|C) \end{align}\]</span></td>
+<td><span class="math display">\[Risk_{int} = \frac{A}{A + C}\]</span></td>
+<td><span class="math display">\[Risk_{ctrl} = \frac{B}{B + D}\]</span></td>
+</tr>
+<tr class="even">
+<td></td>
+<td><span class="math display">\[Odds_{int}= \frac{A}{C}\]</span></td>
+<td><span class="math display">\[Odds_{ctrl}= \frac{B}{D}\]</span></td>
 </tr>
 </tbody>
 </table>
-<section id="rogan-gladen-correction" class="level3" data-number="2.1.1">
-<h3 data-number="2.1.1" class="anchored" data-anchor-id="rogan-gladen-correction"><span class="header-section-number">2.1.1</span> Rogan-Gladen correction</h3>
-<p>Let:</p>
-<ul>
-<li><span class="math inline">\(\pi_{est}\)</span>: the prevalence estimated from data with confidence interval <span class="math inline">\((a, b)\)</span>.</li>
-<li><span class="math inline">\(\pi_{true}\)</span>: the true prevalence with confidence interval <span class="math inline">\((c, d)\)</span>.</li>
-<li>Sensitivity (<span class="math inline">\(SE\)</span>) and specificity (<span class="math inline">\(SP\)</span>) are known.</li>
-</ul>
+<p>Let see the <span class="math inline">\(Risk\)</span> formula:</p>
 <p><span class="math display">\[\begin{align}
-\pi_{est} &amp;= \frac{\text{positive}}{\text{total}} = \frac{TP + FP}{\text{total}} = \frac{TP}{\text{total}} + \frac{FP}{\text{total}} \\
-&amp;= \frac{\text{disease}}{\text{total}} \times \frac{TP}{\text{disease}} + \frac{\text{control}}{\text{total}} \times \frac{FP}{\text{control}} \\
-&amp;= \frac{\text{disease}}{\text{total}} \times \frac{TP}{\text{disease}} + \frac{\text{control}}{\text{total}} \times (1 - \frac{TN}{\text{control}}) \\
-&amp;= \pi_{true} \times SE + (1 - \pi_{true}) \times (1 - SP) \\
-&amp;= \pi_{true} \times SE + 1 - SP - \pi_{true} \times (1 - SP) \\
-&amp;= \pi_{true} \times (SE + SP - 1) + 1 - SP
+Risk_{int} &amp;= \frac{A}{A + C} \\
+&amp;= \frac{\frac{A}{C}}{\frac{A + C}{C}} = \frac{\frac{A}{C}}{\frac{A}{C} + 1} \\
+&amp;= \frac{Odds_{int}}{Odds_{int} + 1}
 \end{align}\]</span></p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Bayesian derivation
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p><span class="math display">\[\begin{align}
-\pi_{est} &amp;= \mathbb{P}(P) = \mathbb{P}(P \cap D) + \mathbb{P}(P \cap C) \\
-&amp;= \mathbb{P}(P|D) \times \mathbb{P}(D) + \mathbb{P}(P|C) \times \mathbb{P}(C) \\
-&amp;= SE \times \pi_{true} + (1 - SP) \times (1 - \pi_{true})
-\end{align}\]</span></p>
-</div>
-</div>
-</div>
-<p><span class="citation" data-cites="rogan1978">(<a href="references.html#ref-rogan1978" role="doc-biblioref">Rogan &amp; Gladen, 1978</a>)</span> derive <span class="math inline">\(\pi_{true}\)</span> as:</p>
-<p><span class="math display">\[\pi_{true} = \frac{\pi_{est} + SP - 1}{SE + SP - 1}\]</span></p>
-<p>Confidence interval of the true prevalence <span class="math inline">\((c, d)\)</span> can be estimated by many methods:</p>
-<ol type="1">
-<li><span class="citation" data-cites="diggle2011">(<a href="references.html#ref-diggle2011" role="doc-biblioref">Diggle, 2011</a>)</span> suggested a simple transformation:</li>
-</ol>
-<p><span class="math display">\[\begin{align}
-c &amp;= \text{max}(0, \frac{a + SP - 1}{SE + SP - 1}) \\
-d &amp;= \text{min}(1, \frac{b + SP - 1}{SE + SP - 1})
-\end{align}\]</span></p>
-</section>
-<section id="bayesian-correction" class="level3" data-number="2.1.2">
-<h3 data-number="2.1.2" class="anchored" data-anchor-id="bayesian-correction"><span class="header-section-number">2.1.2</span> Bayesian correction</h3>
+<p>So <span class="math inline">\(Risk \approx Odds\)</span> when <span class="math inline">\(Odds + 1 \approx 1\)</span>, which is when <span class="math inline">\(Odds \approx 0\)</span>. This is why people often say the odds ratio (OR) and risk ratio (RR) are interchangeable when the baseline risk is very low, meaning the outcome is rare. When the risk falls below 20%, odds and risk become more similar, and they are nearly identical when the risk is below 10% <span class="citation" data-cites="darzi2023">(<a href="references.html#ref-darzi2023" role="doc-biblioref">Darzi et al., 2023</a>)</span>.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
-<div id="ref-diggle2011" class="csl-entry" role="listitem">
-Diggle, P. J. (2011). Estimating Prevalence Using an Imperfect Test. <em>Epidemiology Research International</em>, <em>2011</em>(1), 608719. <a href="https://doi.org/10.1155/2011/608719">https://doi.org/10.1155/2011/608719</a>
-</div>
-<div id="ref-rogan1978" class="csl-entry" role="listitem">
-Rogan, W. J., &amp; Gladen, B. (1978). Estimating prevalence from the results of a screening test. <em>American Journal of Epidemiology</em>, <em>107</em>(1), 71–76. <a href="https://doi.org/10.1093/oxfordjournals.aje.a112510">https://doi.org/10.1093/oxfordjournals.aje.a112510</a>
+<div id="ref-darzi2023" class="csl-entry" role="listitem">
+Darzi, A. J., Busse, J. W., Phillips, M., Wykoff, C. C., Guymer, R. H., Thabane, L., Bhandari, M., &amp; Chaudhary, V. (2023). Interpreting results from randomized controlled trials: What measures to focus on in clinical practice. <em>Eye</em>, <em>37</em>(15), 3055–3058. <a href="https://doi.org/10.1038/s41433-023-02454-7">https://doi.org/10.1038/s41433-023-02454-7</a>
 </div>
 </div>
-</section>
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -757,13 +702,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./age.html" class="pagination-link" aria-label="Age distribution">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Age distribution</span></span>
+      <a href="./sero.html" class="pagination-link" aria-label="Seroprevalence">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Seroprevalence</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./rel-msr.html" class="pagination-link" aria-label="Relative measures">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Relative measures</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./viz.html" class="pagination-link" aria-label="Advanced visualisation">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Advanced visualisation</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
